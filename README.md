@@ -94,6 +94,7 @@ The notebook retains code for both models, allowing for easy comparison and adap
 ├── 📄 app.py                      # Main Streamlit application
 ├── 📄 requirements.txt            # Python dependencies
 ├── 📄 README.md                   # Project documentation (this file)
+├── 📄 Project Report final        # Project report for final submission
 │
 ├── 📁 images/
 │   └── ss.png                     # Application screenshot
