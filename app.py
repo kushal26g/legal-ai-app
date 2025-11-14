@@ -10,6 +10,7 @@ import streamlit as st
 import json
 import faiss
 import numpy as np
+import re
 import google.generativeai as genai
 from sentence_transformers import SentenceTransformer
 from typing import List, Dict, Any
