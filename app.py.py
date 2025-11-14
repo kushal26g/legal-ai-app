@@ -211,8 +211,8 @@ def load_resources():
 st.set_page_config(page_title="Indian Legal AI Helper", layout="wide")
 
 # Set title based on your project proposal
-st.title("🇮🇳 Indian Legal AI Helper")
-st.markdown("A context-aware AI assistant grounded in Indian law. Based on the project by Devansh Verma, Kushal Bansal, and team.")
+st.title("Legal AI Helper")
+st.markdown("A context-aware AI assistant grounded in Indian law.")
 
 # Load the RAG system (will be cached)
 rag_system = load_resources()
