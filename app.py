@@ -118,16 +118,20 @@ class AdvancedLegalRAG(LegalRAGSystem):
     def extract_citations(self, answer: str, retrieved_results: List[Dict]) -> List[Dict]:
         """Extract and format citations from answer"""
         citations = []
+        
+        # Find all [SOURCE X] tags using RegEx
+        found_sources = set(re.findall(r"\[SOURCE (\d+)\]", answer))
+        
         for i, result in enumerate(retrieved_results):
-            source_key = f"[SOURCE {i+1}]"
-            # Check if the source key is in the answer
-            if source_key in answer:
+            source_num_str = str(i + 1)
+            # Check if this source number was actually cited
+            if source_num_str in found_sources:
                 citations.append({
-                    'source_number': i + 1,
-                    'document': result['metadata']['title'],
-                    'source_type': result['metadata']['source'],
-                    'content_preview': result['chunk'][:200] + "...",
-                    'score': result['score']
+                    'source_number': int(source_num_str),
+                    'document': result['metadata'].get('title', 'Unknown Title'),
+                    'source_type': result['metadata'].get('source', 'Unknown Source'),
+                    'content_preview': result['chunk'][:250] + "...",
+                    'score': result['score']  # <-- This is the critical line that adds the score
                 })
         return citations
 
@@ -243,17 +247,23 @@ if rag_system:
                 st.markdown("### 📚 Citations Used")
 
                 if result['citations']:
-
+                    # Sort citations by score in ASCENDING order (best match first)
+                    # A lower score is better (less distance)
                     sorted_citations = sorted(result['citations'], key=lambda x: x['score'])
                     
-                    for citation in result['citations']:
-                        with st.expander(f"**Source {citation['source_number']}:** {citation['document']}"):
+                    st.markdown(f"Displaying {len(sorted_citations)} sources cited in the answer, from best match to worst.")
+                    
+                    for citation in sorted_citations:
+                        # Adding the score to the expander title.
+                        with st.expander(f"**Source {citation['source_number']}:** {citation['document']} (Relevance Score: {citation['score']:.4f})"):
                             st.markdown(f"**Source Type:** {citation['source_type']}")
                             st.markdown(f"**Content Preview:**\n> {citation['content_preview']}")
+                
                 elif "[SOURCE" in result['answer']:
-                     st.warning("The answer cited sources, but they could not be automatically extracted. Please review the retrieved sources below.")
+                         st.warning("The answer cited sources, but they could not be automatically extracted. Please review the retrieved sources below.")
+                
                 else:
-                    st.markdown("No specific sources were cited in the answer.")
+                         st.markdown("No specific sources were cited in the answer.")
 
                 # Optional: Show all retrieved sources for debugging/transparency
                 with st.expander("See all retrieved documents (for reference)"):
