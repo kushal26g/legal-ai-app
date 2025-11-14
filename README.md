@@ -1,16 +1,13 @@
-# Indian Legal AI Helper 🇮🇳
+# Indian Legal AI Helper
 
-A **Streamlit-based, Retrieval-Augmented Generation (RAG)** system for **precise, explainable, and accessible answers** to queries grounded in **Indian law**.  
-Built as a course project for **CS787: Introduction to Generative AI**.
+A **Streamlit-based, Retrieval-Augmented Generation (RAG)** system for **precise, explainable, and accessible answers** to queries grounded in **Indian law**. Built as a course project for **CS787: Introduction to Generative AI**.
 
----
 
 ## 🚀 Live Demo
 
 👉 **Try the app here:**  
 [https://legal-ai-app-njbxk5tsbhunjjjeib9lre.streamlit.app/](https://legal-ai-app-njbxk5tsbhunjjjeib9lre.streamlit.app/)
 
----
 
 ## ✨ Key Features
 
@@ -33,7 +30,6 @@ Built as a course project for **CS787: Introduction to Generative AI**.
   - Clean, minimal **Streamlit UI**: single text box for queries, clear answer + citations panel.
   - Designed for **students, developers, and non-lawyers** who just want clear, cited answers.
 
----
 
 ## 🧠 System Architecture (High-Level)
 
@@ -49,7 +45,6 @@ Built as a course project for **CS787: Introduction to Generative AI**.
 3. **UI Rendering**  
    - Answer, citations, and metadata (source type, title, section) are displayed in Streamlit.
 
----
 
 ## 🛠 Tech Stack
 
@@ -61,8 +56,6 @@ Built as a course project for **CS787: Introduction to Generative AI**.
 | Vector Store  | **FAISS** (Facebook AI Similarity Search)        |
 | Language      | Python 3.10+                                     |
 | Deployment    | Streamlit Community Cloud                        |
-
----
 
 ## 📦 Project Structure
 
