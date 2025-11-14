@@ -125,7 +125,8 @@ class AdvancedLegalRAG(LegalRAGSystem):
                     'source_number': i + 1,
                     'document': result['metadata']['title'],
                     'source_type': result['metadata']['source'],
-                    'content_preview': result['chunk'][:200] + "..."
+                    'content_preview': result['chunk'][:200] + "...",
+                    'score': result['score']
                 })
         return citations
 
@@ -242,7 +243,7 @@ if rag_system:
 
                 if result['citations']:
 
-                    sorted_citations = sorted(result['citations'], key=lambda x: x.get("score", 0))
+                    sorted_citations = sorted(result['citations'], key=lambda x: x['score'])
                     
                     for citation in result['citations']:
                         with st.expander(f"**Source {citation['source_number']}:** {citation['document']}"):
