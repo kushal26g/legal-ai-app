@@ -129,8 +129,7 @@ class AdvancedLegalRAG(LegalRAGSystem):
                     'source_number': int(source_num_str),
                     'document': result['metadata'].get('title', 'Unknown Title'),
                     'source_type': result['metadata'].get('source', 'Unknown Source'),
-                    'content_preview': result['chunk'][:250] + "...",
-                    'score': result['confidence']
+                    'content_preview': result['chunk'][:250] + "..."
                 })
         return citations
 
@@ -246,7 +245,6 @@ if rag_system:
                 st.markdown("### 📚 Citations Used")
 
                 if result['citations']:
-                    sorted_citations = sorted(result['citations'], key=lambda x: x['score'])
                     
                     st.markdown(f"Displaying {len(sorted_citations)} sources cited in the answer.")
                     
