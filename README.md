@@ -225,10 +225,10 @@ This project is created for educational purposes as part of CS787: Introduction 
 
 ## 👥 Authors
 
-Devansh Verma (220346)
-Kushal Bansal (220575)
-Alankrit Gupta (220110)
-Karunaya Garg (220507)
+Devansh Verma (220346)\
+Kushal Bansal (220575)\
+Alankrit Gupta (220110)\
+Karunaya Garg (220507)\
 Kushal Gupta (220576)
 
 ## 🙏 Acknowledgments
