@@ -1,65 +1,79 @@
 # Indian Legal AI Helper 🇮🇳
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://your-app-url.streamlit.app) A contextual, Retrieval-Augmented Generation (RAG) system designed to provide precise, explainable, and accessible answers to queries grounded in Indian law. Built for **CS787: Intro to Generative AI**.
+A **Streamlit-based, Retrieval-Augmented Generation (RAG)** system for **precise, explainable, and accessible answers** to queries grounded in **Indian law**.  
+Built as a course project for **CS787: Introduction to Generative AI**.
 
-## Features
+---
 
-* **Contextual Q&A:** RAG pipeline retrieves legal docs first, then synthesizes answers via LLM.
-* [cite_start]**Source Attribution:** Every answer includes direct citations to source documents[cite: 17].
-* [cite_start]**Curated Corpus:** Includes the Constitution, IPC, CrPC, and 26,000+ Supreme Court judgments[cite: 15].
-* [cite_start]**User-Centric UI:** Simple Streamlit interface for non-lawyers[cite: 39].
+## 🚀 Live Demo
 
-## Tech Stack
+👉 **Try the app here:**  
+[https://legal-ai-app-njbxk5tsbhunjjjeib9lre.streamlit.app/](https://legal-ai-app-njbxk5tsbhunjjjeib9lre.streamlit.app/)
 
-| Component | Technology Used |
-| :--- | :--- |
-| **Web Framework** | Streamlit |
-| **LLM** | Google Gemini 2.5 Flash |
-| **Embedding** | `sentence-transformers/all-MiniLM-L6-v2` |
-| **Vector DB** | FAISS (Facebook AI Similarity Search) |
+---
 
-## How to Run
+## ✨ Key Features
 
-### Prerequisites
-* Python 3.10+
-* [Git LFS](https://git-lfs.github.com/) (Required for the large `.faiss` index)
+- **Contextual Legal Q&A**  
+  - Uses a RAG pipeline: retrieves relevant legal documents first, then synthesizes answers via an LLM.
+  - Answers are grounded in **Indian constitutional and statutory text**, not just model priors.
 
-### 1. Local Setup
+- **Source Attribution by Design**  
+  - Every answer is accompanied by **explicit citations** to the underlying source documents (Articles, Sections, case law, etc.).
+  - Shows the **source snippet + metadata** so users can verify everything themselves.
 
-1.  **Clone Repository (with LFS):**
-    ```bash
-    git lfs install
-    git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-    cd your-repo-name
-    git lfs pull
-    ```
+- **Curated Indian Legal Corpus**  
+  - Current corpus includes:
+    - 🇮🇳 **Constitution of India**  
+    - **Indian Penal Code (IPC / BNS equivalent if updated)**  
+    - **Code of Criminal Procedure (CrPC / BNSS equivalents as applicable)**  
+    - **26,000+ Supreme Court judgments** (indexed for semantic retrieval)
 
-2.  **Install Dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+- **User-Centric Interface (Non-lawyer Friendly)**  
+  - Clean, minimal **Streamlit UI**: single text box for queries, clear answer + citations panel.
+  - Designed for **students, developers, and non-lawyers** who just want clear, cited answers.
 
-3.  **Set Up API Key:**
-    Create the secrets directory and file:
-    ```bash
-    mkdir .streamlit
-    ```
-    Create `.streamlit/secrets.toml` and add your key:
-    ```toml
-    GOOGLE_API_KEY = "your_actual_api_key_here"
-    ```
+---
 
-4.  **Run App:**
-    ```bash
-    streamlit run app.py
-    ```
+## 🧠 System Architecture (High-Level)
 
-### 2. Deployment (Streamlit Cloud)
+1. **User Query** → entered in Streamlit UI  
+2. **Embedding & Retrieval**  
+   - Query is embedded using: `sentence-transformers/all-MiniLM-L6-v2`  
+   - Top-k similar chunks retrieved from a **FAISS** vector index (`main_legal_index.faiss`)
+3. **RAG Answering**  
+   - Retrieved chunks + user question are passed to **Google Gemini 2.5 Flash**  
+   - Prompt instructs LLM to:
+     - Ground answers in retrieved context  
+     - Explicitly **cite document IDs / sections / cases**  
+3. **UI Rendering**  
+   - Answer, citations, and metadata (source type, title, section) are displayed in Streamlit.
 
-1.  Push to GitHub (ensure Git LFS files are pushed).
-2.  Go to [Streamlit Community Cloud](https://share.streamlit.io/).
-3.  Connect repo and deploy.
-4.  **Important:** Add `GOOGLE_API_KEY` in **Settings > Secrets**.
+---
 
-## Project Structure
-. ├── 📄 AI_Legal_Rag.ipynb # Colab notebook for index building ├── 📄 app.py # Main Streamlit app ├── 📄 requirements.txt # Dependencies ├── 📄 README.md # This file │ ├── 🗃️ ground_truth_100.json # Evaluation dataset ├── 🗃️ main_chunks.json # Raw text knowledge base ├── 🗃️ main_chunk_metadata.json # Source metadata └── 🗃️ main_legal_index.faiss # Pre-built Vector Index (LFS)
+## 🛠 Tech Stack
+
+| Component      | Technology                                      |
+|---------------|--------------------------------------------------|
+| Web Framework | Streamlit                                       |
+| LLM           | Google **Gemini 2.5 Flash**                      |
+| Embeddings    | `sentence-transformers/all-MiniLM-L6-v2`         |
+| Vector Store  | **FAISS** (Facebook AI Similarity Search)        |
+| Language      | Python 3.10+                                     |
+| Deployment    | Streamlit Community Cloud                        |
+
+---
+
+## 📦 Project Structure
+
+```bash
+.
+├── 📄 AI_Legal_Rag.ipynb        # Colab notebook for index building & experimentation
+├── 📄 app.py                    # Main Streamlit application
+├── 📄 requirements.txt          # Python dependencies
+├── 📄 README.md                 # Project documentation (this file)
+│
+├── 🗃️ ground_truth_100.json      # Evaluation dataset (Q–A pairs with gold references)
+├── 🗃️ main_chunks.json          # Raw text chunks forming the knowledge base
+├── 🗃️ main_chunk_metadata.json  # Metadata for each chunk (source, section, etc.)
+└── 🗃️ main_legal_index.faiss    # Pre-built FAISS vector index (stored via Git LFS)
