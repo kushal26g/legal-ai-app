@@ -119,7 +119,6 @@ class AdvancedLegalRAG(LegalRAGSystem):
         """Extract and format citations from answer"""
         citations = []
         
-        # Find all [SOURCE X] tags using RegEx
         found_sources = set(re.findall(r"\[SOURCE (\d+)\]", answer))
         
         for i, result in enumerate(retrieved_results):
@@ -131,7 +130,7 @@ class AdvancedLegalRAG(LegalRAGSystem):
                     'document': result['metadata'].get('title', 'Unknown Title'),
                     'source_type': result['metadata'].get('source', 'Unknown Source'),
                     'content_preview': result['chunk'][:250] + "...",
-                    'score': result['score']  # <-- This is the critical line that adds the score
+                    'score': result['confidence']
                 })
         return citations
 
@@ -247,14 +246,11 @@ if rag_system:
                 st.markdown("### 📚 Citations Used")
 
                 if result['citations']:
-                    # Sort citations by score in ASCENDING order (best match first)
-                    # A lower score is better (less distance)
                     sorted_citations = sorted(result['citations'], key=lambda x: x['score'])
                     
-                    st.markdown(f"Displaying {len(sorted_citations)} sources cited in the answer, from best match to worst.")
+                    st.markdown(f"Displaying {len(sorted_citations)} sources cited in the answer.")
                     
                     for citation in sorted_citations:
-                        # Adding the score to the expander title.
                         with st.expander(f"**Source {citation['source_number']}:** {citation['document']} (Relevance Score: {citation['score']:.4f})"):
                             st.markdown(f"**Source Type:** {citation['source_type']}")
                             st.markdown(f"**Content Preview:**\n> {citation['content_preview']}")
