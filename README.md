@@ -224,7 +224,11 @@ This project is created for educational purposes as part of CS787: Introduction 
 
 ## 👥 Authors
 
-Developed as a course project for CS787: Introduction to Generative AI.
+Devansh Verma (220346)
+Kushal Bansal (220575)
+Alankrit Gupta (220110)
+Karunaya Garg (220507)
+Kushal Gupta (220576)
 
 ## 🙏 Acknowledgments
 
